@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Contact List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script th:src="@{//code.jquery.com/jquery-1.12.4.js}"></script>
+<script
+	th:src="@{https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js}"></script>
+<script
+	th:src="@{https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js}"></script>
+<script
+	th:src="@{https://cdn.datatables.net/rowreorder/1.2.0/js/dataTables.rowReorder.min.js}"></script>
+<script
+	th:src="@{https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js}"></script>
+
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css}">
+
+<link rel="stylesheet"
+	th:href="@{https://cdn.datatables.net/rowreorder/1.2.0/css/rowReorder.dataTables.min.css}">
+<link rel="stylesheet"
+	th:href="@{https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css}">
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var table = $('#contactListTable').DataTable({
+			rowReorder : {
+				selector : 'td:nth-child(2)'
+			},
+			responsive : true
+		});
+	});
+</script>
+
+
+<script>
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script',
+			'https://www.google-analytics.com/analytics.js', 'ga');
+
+	ga('create', 'UA-102021176-2', 'auto');
+	ga('send', 'pageview');
+</script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">...</div>
+	<div class="container">
+
+		<div
+			class=" middle-box text-center loginscreen animated fadeInDowncol-sm-5 ">
+
+			<div class="text-left">
+				<br /> <br /> <br /> <br /> <br /> <br />
+				<div th:if="${message}" class="alert alert-success" role="alert"
+					th:text="${deletedContact}+ ' ' + ${message}"></div>
+				<table id="contactListTable" class="table" cellspacing="0"
+					width="100%">
+					<thead>
+						<tr>
+						<tr>
+							<th>Title</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Date Of Birth</th>
+							<th>Gender</th>
+							<th>View</th>
+							<th>Update</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th>Title</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Date Of Birth</th>
+							<th>Gender</th>
+							<th>View</th>
+							<th>Update</th>
+							<th>Delete</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						<tr th:each="contact : ${contactList}">
+							<td th:text="${contact.identification.title}"></td>
+							<td th:text="${contact.identification.firstName}"></td>
+							<td th:text="${contact.identification.lastName}"></td>
+							<td th:text="${contact.identification.dob}"></td>
+							<td th:text="${contact.identification.gender}"></td>
+
+							<td>
+								<form class="form-inline" th:action="@{/contact/viewContact}"
+									th:object="${contact}" method="POST">
+									<input type="hidden" name="id" th:value="${contact.id}" />
+									<button type="submit"
+										class="btn btn-primary block full-width m-b">View</button>
+								</form>
+							</td>
+							<td>
+								<form class="form-inline" th:action="@{/contact/updateContact}"
+									th:object="${contact}" method="GET">
+									<input type="hidden" name="id" th:value="${contact.id}" />
+									<button type="submit"
+										class="btn btn-primary block full-width m-b">Update</button>
+								</form>
+							</td>
+							<td>
+								<form class="form-inline" th:action="@{/contact/deleteContact}"
+									th:object="${contact}" method="POST">
+									<input type="hidden" name="id" th:value="${contact.id}" />
+									<button type="submit"
+										class="btn btn-primary block full-width m-b">Delete</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div align="center" th:replace="fragments/footer :: footer">&copy;
+				Contact</div>
+		</div>
+	</div>
+
+</body>
+</html>

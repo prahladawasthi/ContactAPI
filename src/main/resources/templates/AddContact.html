@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Contact API : Add Contact</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	<div th:replace="fragments/header :: header">...</div>
+	<div class="container">
+		<div
+			class="middle-box text-center loginscreen animated fadeInDown col-sm-5 col-sm-offset-3">
+			<br /> <br /> <br />
+			<hr />
+
+			<h4 align="center">Add Contact</h4>
+			<form action="#" th:action="@{/contact/addContact}"
+				th:object="${contact}" method="post" class="form-horizontal"
+				data-toggle="validator">
+
+				<div th:if="${message}" class="alert alert-success" role="alert"
+					th:text=${message}></div>
+
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <input type="text" th:field="*{identification.title}"
+						placeholder="Title of the Contact" class="form-control" required />
+					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('identification.title')}"
+					th:errors="*{identification.title}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <input type="text" th:field="*{identification.firstName}"
+						placeholder="First Name of the Contact" class="form-control"
+						required /> <span class="glyphicon form-control-feedback"
+						aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('identification.firstName')}"
+					th:errors="*{identification.firstName}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <input type="text" th:field="*{identification.lastName}"
+						placeholder="Last Name of the contact" class="form-control"
+						required /> <span class="glyphicon form-control-feedback"
+						aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('identification.lastName')}"
+					th:errors="*{identification.lastName}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <input type="date" th:field="*{identification.dob}"
+						placeholder="Date of Birth of the contact" class="form-control"
+						required /> <span class="glyphicon form-control-feedback"
+						aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('identification.dob')}"
+					th:errors="*{identification.dob}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <select th:field="*{identification.gender}" class="form-control"
+						required>
+						<option value=""></option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('identification.gender')}"
+					th:errors="*{identification.gender}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+
+				<button type="submit" class="btn btn-primary block full-width m-b">Submit</button>
+			</form>
+
+
+			<br /> <br />
+			<div th:replace="fragments/footer :: footer">&copy; 2020
+				Contact Details</div>
+		</div>
+
+	</div>
+	<!-- Bootstrap Validator plugin -->
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+</body>
+</html>

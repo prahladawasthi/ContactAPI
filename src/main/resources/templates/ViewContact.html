@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<title>Contact API : View Contact</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">...</div>
+	<br />
+	<br />
+	<br />
+
+	<div
+		class="container text-center loginscreen animated fadeInDowncol-sm-6">
+		<div
+			class="middle-box text-center loginscreen animated fadeInDowncol-sm-5">
+			<br /> <br />
+			<div th:if="${message}" class="alert alert-success" role="alert"
+				th:text=${message}></div>
+			<table id="viewcontactTable"
+				class="table table-striped table-bordered text-left" cellspacing="0"
+				width="100%">
+				<tbody>
+					<tr>
+						<td colspan="2" align="center"><b>Contact Details</b></td>
+
+					</tr>
+					<tr>
+						<td>Title</td>
+						<td th:text="${contact.identification.title}"></td>
+					</tr>
+					<tr>
+						<td>First Name</td>
+						<td th:text="${contact.identification.firstName}"></td>
+					</tr>
+					<tr>
+						<td>Last Name</td>
+						<td th:text="${contact.identification.lastName}"></td>
+					</tr>
+					<tr>
+						<td>Date of Birth</td>
+						<td th:text="${contact.identification.dob}"></td>
+					</tr>
+					<tr>
+						<td>Gender</td>
+						<td th:text="${contact.identification.gender}"></td>
+					</tr>
+
+					<tr>
+						<td>Contact Address</td>
+						<td><div th:each="address : ${contact.address}">
+								<table id="viewcontactAddressTable"
+									class="table table-striped table-bordered text-left"
+									cellspacing="0" width="100%">
+									<tbody>
+										<tr>
+											<td colspan="2" align="center"><b>Contact Address
+													Details</b></td>
+										</tr>
+										<tr>
+											<td>Type</td>
+											<td th:text="${address.type}"></td>
+										</tr>
+										<tr>
+											<td>Number</td>
+											<td th:text="${address.number}"></td>
+										</tr>
+										<tr>
+											<td>Street</td>
+											<td th:text="${address.street}"></td>
+										</tr>
+										<tr>
+											<td>Unit</td>
+											<td th:text="${address.unit}"></td>
+										</tr>
+										<tr>
+											<td>City</td>
+											<td th:text="${address.city}"></td>
+										</tr>
+										<tr>
+											<td>State</td>
+											<td th:text="${address.state}"></td>
+										</tr>
+										<tr>
+											<td>Zip Code</td>
+											<td th:text="${address.zipcode}"></td>
+										</tr>
+										<tr>
+											<td align="center">
+												<form class="form-inline"
+													th:action="@{/contact/updateContactAddress}"
+													th:object="${address}" method="GET">
+													<input type="hidden" name="id" th:value="${address.id}" />
+													<button type="submit"
+														class="btn btn-primary block full-width m-b">Update
+														Address</button>
+												</form>
+											</td>
+											<td align="center">
+												<form class="form-inline"
+													th:action="@{/contact/deleteContactAddress}"
+													th:object="${address}" method="POST">
+													<input type="hidden" name="id" th:value="${address.id}" />
+													<input type="hidden" name="contactId"
+														th:value="${contact.id}" />
+													<button type="submit"
+														class="btn btn-primary block full-width m-b">Delete
+														Address</button>
+												</form>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<form class="form-inline"
+								th:action="@{/contact/addContactAddress}" th:object="${address}"
+								method="GET">
+								<input type="hidden" name="id" th:value="${contact.id}" />
+								<button type="submit"
+									class="btn btn-primary block full-width m-b">Add
+									Address</button>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td>Contact communication</td>
+						<td><div th:each="communication : ${contact.communication}">
+								<table id="viewcontactCommunicationTable"
+									class="table table-striped table-bordered text-left"
+									cellspacing="0" width="100%">
+									<tbody>
+										<tr>
+											<td colspan="2" align="center"><b>Contact
+													Communication Details</b></td>
+										</tr>
+										<tr>
+											<td>Type</td>
+											<td th:text="${communication.type}"></td>
+										</tr>
+										<tr>
+											<td>Value</td>
+											<td th:text="${communication.value}"></td>
+										</tr>
+										<tr>
+											<td>Preferred</td>
+											<td th:text="${communication.preferred}"></td>
+										</tr>
+
+										<tr>
+											<td align="center">
+												<form class="form-inline"
+													th:action="@{/contact/updateContactCommunication}"
+													th:object="${communication}" method="GET">
+													<input type="hidden" name="id"
+														th:value="${communication.id}" />
+													<button type="submit"
+														class="btn btn-primary block full-width m-b">Update
+														Communication</button>
+												</form>
+
+											</td>
+											<td align="center">
+												<form class="form-inline"
+													th:action="@{/contact/deleteContactCommunication}"
+													th:object="${communication}" method="POST">
+													<input type="hidden" name="id"
+														th:value="${communication.id}" /> <input type="hidden"
+														name="contactId" th:value="${contact.id}" />
+													<button type="submit"
+														class="btn btn-primary block full-width m-b">Delete
+														Communication</button>
+												</form>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div></td>
+
+
+
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<form class="form-inline"
+								th:action="@{/contact/addContactCommunication}"
+								th:object="${communication}" method="GET">
+								<input type="hidden" name="id" th:value="${contact.id}" />
+								<button type="submit"
+									class="btn btn-primary block full-width m-b">Add
+									Communication</button>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+							<form class="form-inline" th:action="@{/contact/updateContact}"
+								th:object="${contact}" method="GET">
+								<input type="hidden" name="id" th:value="${contact.id}" />
+								<button type="submit"
+									class="btn btn-primary block full-width m-b">Update</button>
+							</form>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+
+
+			<div th:replace="fragments/footer :: footer">...</div>
+
+		</div>
+	</div>
+</body>
+</html>
