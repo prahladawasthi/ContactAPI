@@ -98,6 +98,8 @@
 													th:action="@{/contact/updateContactAddress}"
 													th:object="${address}" method="GET">
 													<input type="hidden" name="id" th:value="${address.id}" />
+													<input type="hidden" name="contactId"
+														th:value="${contact.id}" />
 													<button type="submit"
 														class="btn btn-primary block full-width m-b">Update
 														Address</button>
@@ -163,7 +165,8 @@
 													th:action="@{/contact/updateContactCommunication}"
 													th:object="${communication}" method="GET">
 													<input type="hidden" name="id"
-														th:value="${communication.id}" />
+														th:value="${communication.id}" /> <input type="hidden"
+														name="contactId" th:value="${contact.id}" />
 													<button type="submit"
 														class="btn btn-primary block full-width m-b">Update
 														Communication</button>

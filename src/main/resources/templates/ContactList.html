@@ -94,15 +94,15 @@
 							<th>Delete</th>
 						</tr>
 					</tfoot>
-					<tbody>
+					<tbody th:if="${not #lists.isEmpty(contactList)}">
 						<tr th:each="contact : ${contactList}">
-							<td th:text="${contact.identification.title}"></td>
-							<td th:text="${contact.identification.firstName}"></td>
-							<td th:text="${contact.identification.lastName}"></td>
-							<td th:text="${contact.identification.dob}"></td>
-							<td th:text="${contact.identification.gender}"></td>
+							<td th:text="${contact?.identification?.title}"></td>
+							<td th:text="${contact?.identification?.firstName}"></td>
+							<td th:text="${contact?.identification?.lastName}"></td>
+							<td th:text="${contact?.identification?.dob}"></td>
+							<td th:text="${contact?.identification?.gender}"></td>
 
-							<td>
+							<td th:if="${contact?.identification?.id != null}">
 								<form class="form-inline" th:action="@{/contact/viewContact}"
 									th:object="${contact}" method="POST">
 									<input type="hidden" name="id" th:value="${contact.id}" />
@@ -110,7 +110,7 @@
 										class="btn btn-primary block full-width m-b">View</button>
 								</form>
 							</td>
-							<td>
+							<td th:if="${contact?.identification?.id != null}">
 								<form class="form-inline" th:action="@{/contact/updateContact}"
 									th:object="${contact}" method="GET">
 									<input type="hidden" name="id" th:value="${contact.id}" />
@@ -118,7 +118,7 @@
 										class="btn btn-primary block full-width m-b">Update</button>
 								</form>
 							</td>
-							<td>
+							<td th:if="${contact?.identification?.id != null}">
 								<form class="form-inline" th:action="@{/contact/deleteContact}"
 									th:object="${contact}" method="POST">
 									<input type="hidden" name="id" th:value="${contact.id}" />

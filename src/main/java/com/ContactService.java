@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 import com.entity.Address;
 import com.entity.Communication;
 import com.entity.Contact;
+import com.entity.Identification;
+import com.repo.AddressRepository;
+import com.repo.CommunicationRepository;
+import com.repo.ContactRepository;
+import com.repo.IdentificationRepository;
 
 @Service("contactService")
 public class ContactService {
@@ -23,23 +28,27 @@ public class ContactService {
 	@Autowired
 	private CommunicationRepository communicationRepository;
 
+	@Autowired
+	private IdentificationRepository identificationRepository;
+
 	public List<Contact> getAllContacts() {
 		return contactRepository.findAll();
 	}
 
-	public Contact getContact(int id) {
-		return contactRepository.findById(id).get();
+	public Optional<Contact> getContact(int id) {
+		return contactRepository.findById(id);
 	}
 
 	public Contact addContact(Contact contact) {
 		return contactRepository.save(contact);
 	}
 
-	public Optional<Contact> updateContact(Contact contact) {
-
-		Optional<Contact> oldContact = contactRepository.findById(contact.getId());
-		if (oldContact.isPresent()) {
-			return Optional.of(contactRepository.save(contact));
+	public Optional<Contact> updateContact(Integer contactId, Identification identification) {
+		Optional<Identification> oldIdentification = identificationRepository.findById(identification.getId());
+		if (oldIdentification.isPresent()) {
+			identification.setContact(contactRepository.findById(contactId).get());
+			Optional.of(identificationRepository.save(identification));
+			return contactRepository.findById(contactId);
 		} else {
 			return Optional.empty();
 		}
@@ -52,6 +61,10 @@ public class ContactService {
 			return order;
 		}
 		return Optional.empty();
+	}
+
+	public Optional<Address> getAddress(Integer id) {
+		return addressRepository.findById(id);
 	}
 
 	public Optional<Contact> addAddress(Integer contactId, Address address) {
@@ -71,6 +84,18 @@ public class ContactService {
 		}
 	}
 
+	public Optional<Contact> updateAddress(Integer contactId, Address address) {
+		Optional<Contact> existingContact = contactRepository.findById(contactId);
+		Optional<Address> oldAddress = addressRepository.findById(address.getId());
+		if (oldAddress.isPresent()) {
+			address.setContact(existingContact.get());
+			addressRepository.save(address);
+			return contactRepository.findById(contactId);
+		} else {
+			return Optional.empty();
+		}
+	}
+
 	public Optional<Contact> deleteAddress(Integer contactId, Integer id) {
 		Optional<Address> address = addressRepository.findById(id);
 		if (address.isPresent()) {
@@ -78,6 +103,10 @@ public class ContactService {
 			return contactRepository.findById(contactId);
 		}
 		return Optional.empty();
+	}
+
+	public Optional<Communication> getCommunication(Integer id) {
+		return communicationRepository.findById(id);
 	}
 
 	public Optional<Contact> addCommunication(Integer contactId, Communication communication) {
@@ -92,6 +121,18 @@ public class ContactService {
 				contact.setCommunication(communicationList);
 			}
 			return Optional.of(contactRepository.save(contact));
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	public Optional<Contact> updateCommunication(Integer contactId, Communication communication) {
+		Optional<Contact> existingContact = contactRepository.findById(contactId);
+		Optional<Communication> oldCommunication = communicationRepository.findById(communication.getId());
+		if (oldCommunication.isPresent()) {
+			communication.setContact(existingContact.get());
+			communicationRepository.save(communication);
+			return contactRepository.findById(contactId);
 		} else {
 			return Optional.empty();
 		}

@@ -1,5 +1,7 @@
 package com.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "identification")
@@ -17,7 +25,11 @@ public class Identification {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String lastName;
-	private String dob;
+
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private Date dob;
 	private String gender;
 	private String title;
 	private String firstName;
@@ -25,8 +37,7 @@ public class Identification {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "contact_id", insertable = true, updatable = true, nullable = false, referencedColumnName = "id")
 	private Contact contact;
-	
-	
+
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
@@ -55,11 +66,11 @@ public class Identification {
 		this.lastName = lastName;
 	}
 
-	public String getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(String dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 

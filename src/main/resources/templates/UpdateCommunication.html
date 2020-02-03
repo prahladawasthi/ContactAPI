@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Contact API : Update Communication</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
+<script
+	th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	<div th:replace="fragments/header :: header">...</div>
+	<div class="container">
+		<div
+			class="middle-box text-center loginscreen animated fadeInDown col-sm-5 col-sm-offset-3">
+			<br /> <br /> <br />
+			<hr />
+
+			<h4 align="center">Update Contact Communication</h4>
+			<form action="#" th:action="@{/contact/updateContactCommunication}"
+				th:object="${communication}" method="post" class="form-horizontal"
+				data-toggle="validator">
+
+				<div th:if="${message}" class="alert alert-success" role="alert"
+					th:text=${message}></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <select th:field="*{type}" class="form-control" required>
+						<option value=""></option>
+						<option value="Mobile">Mobile</option>
+						<option value="Phone">Phone</option>
+						<option value="Email">Email</option>
+					</select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('type')}" th:errors="*{type}"
+					class="validation-message alert alert-.danger" role="alert"></div>
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <input type="text" th:field="*{value}"
+						placeholder="Number of the Contact communication"
+						class="form-control" required /> <span
+						class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('value')}" th:errors="*{value}"
+					class="validation-message alert alert-danger" role="alert"></div>
+
+
+				<div class="form-group input-group has-feedback">
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-pencil"></span>
+					</span> <select th:field="*{preferred}" class="form-control" required>
+						<option value=""></option>
+						<option value="True">True</option>
+						<option value="False">False</option>
+					</select> <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				</div>
+				<div th:if="${#fields.hasErrors('preferred')}"
+					th:errors="*{preferred}"
+					class="validation-message alert alert-.danger" role="alert"></div>
+				<input type="hidden" name="id" th:value="${communication.id}" /> <input
+					type="hidden" name="contactId" th:value="${contactId}" />
+				<button type="submit" class="btn btn-primary block full-width m-b">Submit</button>
+			</form>
+			<br /> <br />
+			<div th:replace="fragments/footer :: footer">&copy; 2020
+				Contact Details</div>
+		</div>
+
+	</div>
+	<!-- Bootstrap Validator plugin -->
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+</body>
+</html>
